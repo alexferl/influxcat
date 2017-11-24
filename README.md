@@ -42,8 +42,14 @@ Use "influxcat [command] --help" for more information about a command.
 
 Dumping a timeseries to a file:
 
-`$ influxcat dump -d mydb -s myts data.json`
+```
+$ influxcat dump -d mydb -s myts data.json
+done dumping mydb.myts (1337 rows)
+```
 
 Restoring a timeseries from a file (the target database has to exist):
 
-`$ influxcat restore -d mydb -s myts data.json`
+```
+$ influxcat restore -d mydb -s myts data.json
+finished restoring mydb.myts (1337 rows)
+```
