@@ -205,16 +205,17 @@ func Restore(c client.Client, db, series string, file io.Reader) {
 		os.Exit(1)
 	}
 
+	fmt.Printf("finished restoring %s.%s (%d rows)\n", db, series, len(bp.Points()))
 }
 
 func validateArgs(db, series string) {
 	if db == "" {
-		fmt.Println("Error: You need to specify a database with --database name")
+		fmt.Println("Error: You need to specify a database with -d name")
 		os.Exit(1)
 	}
 
 	if series == "" {
-		fmt.Println("Error: You need to specify a series with --series name")
+		fmt.Println("Error: You need to specify a series with -s name")
 		os.Exit(1)
 	}
 }

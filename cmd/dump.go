@@ -43,6 +43,8 @@ var dumpCmd = &cobra.Command{
 			fmt.Printf("Error writing dump to file: %v\n", err)
 			os.Exit(1)
 		}
+
+		fmt.Printf("done dumping %s.%s (%d rows)\n", influxDatabaseName, influxSeriesName, len(res[0].Values))
 	},
 }
 
