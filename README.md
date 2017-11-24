@@ -26,6 +26,7 @@ Available Commands:
   dump        Dumps a timeseries from a database
   help        Help about any command
   restore     Restores a timeseries into a database
+  version     Prints the version number
 
 Flags:
   -a, --addr string       addr should be of the form "http://host:port" (default "http://localhost:8086")
