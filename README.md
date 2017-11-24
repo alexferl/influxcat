@@ -8,7 +8,7 @@ If you have Go installed on your computer:
 
 `go install github.com/admiralobvious/influxcat`
 
-If you don't have Go installed, download the latest release binary from GitHub.
+If you don't have Go installed, download the latest release binary from [here](https://github.com/admiralobvious/influxcat/release).
 
 ## Using
 
