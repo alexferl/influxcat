@@ -44,6 +44,6 @@ Dumping a timeseries to a file:
 
 `$ influxcat dump -d mydb -s myts data.json`
 
-Restoring a timeseries from a file (the target database has to exists):
+Restoring a timeseries from a file (the target database has to exist):
 
 `$ influxcat restore -d mydb -s myts data.json`
