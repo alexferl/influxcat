@@ -19,16 +19,7 @@ var influxSeriesName string
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "influxcat",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	Short: "A tool to dump and restore InfluxDB timeseries",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -43,20 +34,17 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.influxcat.yaml)")
-	RootCmd.PersistentFlags().StringVar(&InfluxAddr, "addr", "http://localhost:8086",
-		"Addr should be of the form \"http://host:port\"")
-	RootCmd.PersistentFlags().StringVar(&influxUsername, "username", "",
-		"Username is the InfluxDB username, optional")
-	RootCmd.PersistentFlags().StringVar(&influxPassword, "password", "",
-		"Password is the InfluxDB password, optional")
-	RootCmd.PersistentFlags().StringVar(&influxDatabaseName, "database", "",
-		"Database is the InfluxDB database")
-	RootCmd.PersistentFlags().StringVar(&influxSeriesName, "series", "",
-		"Series is the InfluxDB timeseries")
+	RootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $HOME/.influxcat.yaml)")
+	RootCmd.PersistentFlags().StringVarP(&InfluxAddr, "addr", "a", "http://localhost:8086",
+		"addr should be of the form \"http://host:port\"")
+	RootCmd.PersistentFlags().StringVarP(&influxUsername, "username", "u", "",
+		"username is the InfluxDB username, optional")
+	RootCmd.PersistentFlags().StringVarP(&influxPassword, "password", "p", "",
+		"password is the InfluxDB password, optional")
+	RootCmd.PersistentFlags().StringVarP(&influxDatabaseName, "database", "d", "",
+		"database is the InfluxDB database, required")
+	RootCmd.PersistentFlags().StringVarP(&influxSeriesName, "series", "s", "",
+		"series is the InfluxDB timeseries, required")
 }
 
 // initConfig reads in config file and ENV variables if set.
