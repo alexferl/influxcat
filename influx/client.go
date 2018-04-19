@@ -26,7 +26,7 @@ func NewInfluxDBClient(conf InfluxDBConfig) client.Client {
 	})
 
 	if err != nil {
-		fmt.Printf("Error connection to InfluxDB: %v\n", err)
+		fmt.Printf("Error connecting to InfluxDB: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -38,7 +38,6 @@ func query(c client.Client, cmd string, db string) (res []client.Result) {
 	q := client.Query{
 		Command:  cmd,
 		Database: db,
-		Chunked:  true,
 	}
 
 	defer c.Close()
@@ -72,10 +71,10 @@ type Meta struct {
 func Dump(c client.Client, db, series string) []Series {
 	validateArgs(db, series)
 
-	cmd := fmt.Sprintf("SELECT * FROM %s", series)
+	cmd := fmt.Sprintf("SELECT * FROM \"%s\"", series)
 	res := query(c, cmd, db)
 
-	tags := getTags(c, db)
+	tags := getTags(c, db, series)
 	tagsMap := map[string]string{}
 	for _, tag := range tags {
 		for idx, column := range res[0].Series[0].Columns {
@@ -85,7 +84,7 @@ func Dump(c client.Client, db, series string) []Series {
 		}
 	}
 
-	fields := getFields(c, db)
+	fields := getFields(c, db, series)
 	fieldsMap := map[int][]string{}
 	if len(fields) > 0 {
 		for _, field := range fields {
@@ -220,8 +219,8 @@ func validateArgs(db, series string) {
 	}
 }
 
-func getFields(c client.Client, db string) [][]string {
-	cmd := fmt.Sprintf("SHOW FIELD KEYS")
+func getFields(c client.Client, db string, measurement string) [][]string {
+	cmd := fmt.Sprintf("SHOW FIELD KEYS FROM \"%s\"", measurement)
 	res := query(c, cmd, db)
 
 	validateTimeSeries(res[0].Series)
@@ -234,8 +233,8 @@ func getFields(c client.Client, db string) [][]string {
 	return fields
 }
 
-func getTags(c client.Client, db string) []string {
-	cmd := fmt.Sprintf("SHOW TAG KEYS")
+func getTags(c client.Client, db string, measurement string) []string {
+	cmd := fmt.Sprintf("SHOW TAG KEYS FROM \"%s\"", measurement)
 	res := query(c, cmd, db)
 
 	validateTimeSeries(res[0].Series)
