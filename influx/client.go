@@ -154,25 +154,27 @@ func Restore(c client.Client, db, series string, file io.Reader) {
 					os.Exit(1)
 				}
 
-				if keyInMapSlice(s.Meta.Fields, idx) {
-					switch s.Meta.Fields[idx][1] {
-					case "float":
-						newFields[s.Meta.Fields[idx][0]] = values[idx].(float64)
-					case "integer":
-						newFields[s.Meta.Fields[idx][0]] = int(values[idx].(float64))
-					case "string":
-						newFields[s.Meta.Fields[idx][0]] = values[idx].(string)
-					case "boolean":
-						newFields[s.Meta.Fields[idx][0]] = values[idx].(bool)
-					case "timestamp":
-						newFields[s.Meta.Fields[idx][0]] = values[idx].(time.Time)
-					default:
-						fmt.Printf("Error: Unknown data type for value %v\n", values[idx])
-						os.Exit(1)
-					}
+				if values[idx] != nil { // skip if a column doesn't have data
+					if keyInMapSlice(s.Meta.Fields, idx) {
+						switch s.Meta.Fields[idx][1] {
+						case "float":
+							newFields[s.Meta.Fields[idx][0]] = values[idx].(float64)
+						case "integer":
+							newFields[s.Meta.Fields[idx][0]] = int(values[idx].(float64))
+						case "string":
+							newFields[s.Meta.Fields[idx][0]] = values[idx].(string)
+						case "boolean":
+							newFields[s.Meta.Fields[idx][0]] = values[idx].(bool)
+						case "timestamp":
+							newFields[s.Meta.Fields[idx][0]] = values[idx].(time.Time)
+						default:
+							fmt.Printf("Error: Unknown data type for value %v\n", values[idx])
+							os.Exit(1)
+						}
 
-				} else if keyInMap(s.Meta.Tags, strconv.Itoa(idx)) {
-					newTags[s.Meta.Tags[strconv.Itoa(idx)]] = values[idx].(string)
+					} else if keyInMap(s.Meta.Tags, strconv.Itoa(idx)) {
+						newTags[s.Meta.Tags[strconv.Itoa(idx)]] = values[idx].(string)
+					}
 				}
 			}
 
