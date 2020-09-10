@@ -1,14 +1,14 @@
 # influxcat
 
-A simple tool to dump and restore InfluxDB timeseries. This is **NOT** a replacement for InfluxDB's [backup and restore](https://docs.influxdata.com/influxdb/v1.3/administration/backup_and_restore/) feature as this tool is very naive and was made more to restore data from an InfluxDB instance to another for testing and/or debugging purposes.
+A simple tool to dump and restore InfluxDB timeseries. This is **NOT** a replacement for InfluxDB's [backup and restore](https://docs.influxdata.com/influxdb/v1.8/administration/backup_and_restore/) feature as this tool is very naive and was made more to restore data from an InfluxDB instance to another for testing and/or debugging purposes.
 
 ## Installing
 
 If you have Go installed on your computer:
 
-`go install github.com/admiralobvious/influxcat`
+`go install github.com/alexferl/influxcat`
 
-If you don't have Go installed, download the latest release binary from [here](https://github.com/admiralobvious/influxcat/releases/latest).
+If you don't have Go installed, download the latest release binary from [here](https://github.com/alexferl/influxcat/releases/latest).
 
 
 ## Using
